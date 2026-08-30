@@ -1,15 +1,15 @@
 # Mellemrum
 
-Mellemrum er en React-prototype for en lokal kultur- og eventplatform. Det er produceret som en del af første eksamen på 3. semester som mulitmedie designer på EAAA.
-
-Den primære målgruppe er personer, der ønsker en enkel vej til at opdage og tilmelde sig lokale kulturoplevelser i Aarhus. Arrangører er en sekundær målgruppe, som bruger platformen til at dele events og få overblik over tilmeldinger.
-
-Guiden hjælper med at få React-projektet til at køre lokalt og forbinde det til et personligt supabase-project.
+Mellemrum er en React-prototype for en fiktiv eventplatform. 
+Det er produceret som en del af første eksamen på 3. semester som mulitmedie designer på EAAA.
 
 Live Pages:
 https://danielbilkvist.github.io/mellemrum/
 
-## Guide:
+## Guide
+
+Guiden her hjælper med at få React-projektet til at køre lokalt og forbinde det til et personligt supabase-project.:
+
 ## Det skal du bruge
 
 - Node.js installeret på din computer
