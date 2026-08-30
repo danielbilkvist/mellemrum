@@ -1,13 +1,15 @@
 # Mellemrum
 
-Mellemrum er en React-prototype for en lokal kultur- og eventplatform. Projektet er startpunktet for Case 1 i Product Optimization.
+Mellemrum er en React-prototype for en lokal kultur- og eventplatform. Det er produceret som en del af første eksamen på 3. semester som mulitmedie designer på EAAA.
 
 Den primære målgruppe er personer, der ønsker en enkel vej til at opdage og tilmelde sig lokale kulturoplevelser i Aarhus. Arrangører er en sekundær målgruppe, som bruger platformen til at dele events og få overblik over tilmeldinger.
 
-Guiden hjælper dig med at få React-projektet til at køre lokalt og forbinde det til dit eget Supabase-projekt. Du behøver ikke kunne skrive SQL for at følge opsætningen.
+Guiden hjælper med at få React-projektet til at køre lokalt og forbinde det til et personligt supabase-project.
 
-[Se den udleverede løsning online](https://cederdorff.com/mellemrum/), hvis du vil udforske prototypen, før du sætter projektet op lokalt.
+Live Pages:
+https://danielbilkvist.github.io/mellemrum/
 
+## Guide:
 ## Det skal du bruge
 
 - Node.js installeret på din computer
@@ -143,12 +145,6 @@ Se den gennemgåede proces på Canvas: [Web App-forbedringer og teknisk fundamen
 - `/events/:eventId` – eventdetalje og tilmelding
 - `/om` – om Mellemrum
 - `/tilmeldinger` – internt overblik
-
-## Arbejdsform
-
-Arbejd med én sammenhængende forbedring ad gangen i en tydeligt navngivet feature branch. Lav forståelige commits, verificér ændringen, og merge derefter branchen til `main`.
-
-Arbejd ikke direkte på `main`.
 
 ## Scripts
 
