@@ -11,7 +11,6 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/events/:eventId" element={<EventPage />} />
@@ -19,7 +18,6 @@ export default function App() {
           <Route path="/tilmeldinger" element={<RegistrationsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
-      </main>
       <Footer />
     </>
   );
