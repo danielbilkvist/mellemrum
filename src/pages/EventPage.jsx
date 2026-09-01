@@ -18,9 +18,11 @@ export default function EventPage() {
 
   useEffect(() => {
     async function getEvent() {
-      const response = await fetch(`${SUPABASE_URL}/events?id=eq.${eventId}`, {
-        headers,
-      });
+      const query = "select=*,venue:venues(*)";
+        const response = await fetch(
+        `${SUPABASE_URL}/events?id=eq.${eventId}&${query}`,
+        { headers },
+        );
       const data = await response.json();
       setEvent(data[0]);
     }
@@ -89,10 +91,10 @@ export default function EventPage() {
               <p>
                 <strong>Sted</strong>
                 <span>
-                  {event.venueName}
+                  {event.venue.name}
                   <br />
-                  {event.venueAddress}, {event.venuePostalCode}{" "}
-                  {event.venueCity}
+                  {event.venue.address}, {event.venue.postalCode}{" "}
+                  {event.venue.city}
                   {event.venueWebsite && (
                     <>
                       <br />
