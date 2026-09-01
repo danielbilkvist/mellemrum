@@ -95,10 +95,10 @@ export default function EventPage() {
                   <br />
                   {event.venue.address}, {event.venue.postalCode}{" "}
                   {event.venue.city}
-                  {event.venueWebsite && (
+                  {event.venue.website && (
                     <>
                       <br />
-                      <a href={event.venueWebsite}>Besøg venue</a>
+                      <a href={event.venue.website}>Besøg venue</a>
                     </>
                   )}
                 </span>
