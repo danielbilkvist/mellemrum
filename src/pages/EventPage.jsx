@@ -39,9 +39,7 @@ export default function EventPage() {
       await create({
         name: name.trim(),
         email: email.trim(),
-        eventTitle: event.title,
-        eventDate: event.date,
-        eventLocation: event.venueName,
+        eventId: event.id,
       });
 
       setName("");
