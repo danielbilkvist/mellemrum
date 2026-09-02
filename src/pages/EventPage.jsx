@@ -13,19 +13,44 @@ export default function EventPage() {
   const [event, setEvent] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
 
   useEffect(() => {
     async function getEvent() {
+        try {
+          setLoading(true);
+          setError("");
+          
       const query = "select=*,venue:venues(*)";
-        const response = await fetch(
-        `${SUPABASE_URL}/events?id=eq.${eventId}&${query}`,
-        { headers },
-        );
+
+      const response = await fetch(
+      `${SUPABASE_URL}/events?id=eq.${eventId}&${query}`,
+      { headers },
+      );
+
+      if (!response.ok) {
+        throw new Error("Siden kunne ikke hente event.");
+      }
+
       const data = await response.json();
+
+      if (data.length === 0) {
+        throw new Error("Event ikke fundet.");
+      }
+
       setEvent(data[0]);
+    } catch (error) {
+      console.error(error);
+      setError("Der opstod en fejl under hentning af event. Prøv igen senere.");
+    } finally {
+      setLoading(false);
     }
+  }
 
     getEvent();
   }, [eventId]);
@@ -53,8 +78,16 @@ export default function EventPage() {
     }
   }
 
+  if (loading) {
+    return <p>Henter event...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   if (!event) {
-    return null;
+    return <p>Event ikke fundet.</p>;
   }
 
   const date = new Date(event.date);

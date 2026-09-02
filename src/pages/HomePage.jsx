@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import Footer from "../components/Footer";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -13,11 +12,30 @@ export default function HomePage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("Alle");
 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     async function getEvents() {
-      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc`, { headers });
+      try {
+        setLoading(true);
+        setError("");
+        
+      const query = "select=*,venue:venues(*)";
+
+      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc&${query}`, { headers });
+      if (!response.ok) {
+        throw new Error("Siden kunne ikke hente events.");
+      }
       const data = await response.json();
       setEvents(data);
+      } catch (error) {
+        console.error(error);
+
+      setError("Der opstod en fejl under hentning af events. Prøv igen senere.");
+      } finally {
+        setLoading(false);
+      }
     }
 
     getEvents();
@@ -26,7 +44,7 @@ export default function HomePage() {
   const categories = ["Alle", ...new Set(events.map((event) => event.category))];
 
   const filteredEvents = events.filter((event) => {
-    const searchText = `${event.title} ${event.summary} ${event.venueName}`.toLowerCase();
+    const searchText = `${event.title} ${event.summary} ${event.venue.name}`.toLowerCase();
     const matchesSearch = searchText.includes(search.toLowerCase());
     const matchesCategory = category === "Alle" || event.category === category;
 
@@ -64,7 +82,7 @@ export default function HomePage() {
             <p className="eyebrow dark">Det sker</p>
             <h2>Kommende events</h2>
           </div>
-          <p>Kuraterede oplevelser i byen – fra små scener til store idéer.</p>
+          <p>Kuraterede oplevelser i byen. Fra små scener til store idéer.</p>
         </section>
 
         <section className="filters">
@@ -90,6 +108,11 @@ export default function HomePage() {
           </label>
         </section>
 
+        {loading && <p>Henter events...</p>}
+
+        {error && <p>{error}</p>}
+
+        {!loading && !error && (
         <section className="event-grid">
           {filteredEvents.map((event) => (
             <article className="event-card" key={event.id}>
@@ -100,7 +123,7 @@ export default function HomePage() {
                 <p>{event.summary}</p>
                 <div className="event-meta">
                   <span>{formatEventDate(event.date)}</span>
-                  <span>{event.venueName}</span>
+                  <span>{event.venue.name}</span>
                 </div>
                 <Link className="card-link" to={`/events/${event.id}`}>
                   Læs mere
@@ -109,6 +132,7 @@ export default function HomePage() {
             </article>
           ))}
         </section>
+        )}
       </main>
     </>
   );
