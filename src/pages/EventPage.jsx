@@ -1,6 +1,8 @@
 import { Link, useParams } from "react-router";
 import useEvent from "../hooks/useEvent";
 import Registration from "../components/Registration";
+import { formatEventDate } from "../utils/formatDate";
+import { formatEventTime } from "../utils/formatDate";
 
 export default function EventPage() {
   const { eventId } = useParams();
@@ -19,8 +21,6 @@ export default function EventPage() {
     return <p>Event ikke fundet.</p>;
   }
 
-  const date = new Date(event.date);
-
   return (
     <>
       <main className="event-page">
@@ -37,16 +37,9 @@ export default function EventPage() {
             <div className="detail-list">
               <p>
                 <strong>Dato</strong>
-                {date.toLocaleDateString("da-DK", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                })}{" "}
+                {formatEventDate(event.date)}{" "}
                 kl.{" "}
-                {date.toLocaleTimeString("da-DK", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+                {formatEventTime(event.date)}
               </p>
               <p>
                 <strong>Sted</strong>

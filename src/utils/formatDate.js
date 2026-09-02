@@ -8,3 +8,12 @@ export function formatEventDate(eventDate) {
 
   return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
 }
+
+export function formatEventTime(eventDate) {
+  const date = new Date(eventDate);
+  const formattedTime = date.toLocaleTimeString("da-DK", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return formattedTime;
+}
