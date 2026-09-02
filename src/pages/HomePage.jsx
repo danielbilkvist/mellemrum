@@ -20,7 +20,10 @@ export default function HomePage() {
       try {
         setLoading(true);
         setError("");
-      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc`, { headers });
+        
+      const query = "select=*,venue:venues(*)";
+
+      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc&${query}`, { headers });
       if (!response.ok) {
         throw new Error("Siden kunne ikke hente events.");
       }
@@ -41,7 +44,7 @@ export default function HomePage() {
   const categories = ["Alle", ...new Set(events.map((event) => event.category))];
 
   const filteredEvents = events.filter((event) => {
-    const searchText = `${event.title} ${event.summary} ${event.venueName}`.toLowerCase();
+    const searchText = `${event.title} ${event.summary} ${event.venue.name}`.toLowerCase();
     const matchesSearch = searchText.includes(search.toLowerCase());
     const matchesCategory = category === "Alle" || event.category === category;
 
@@ -120,7 +123,7 @@ export default function HomePage() {
                 <p>{event.summary}</p>
                 <div className="event-meta">
                   <span>{formatEventDate(event.date)}</span>
-                  <span>{event.venueName}</span>
+                  <span>{event.venue.name}</span>
                 </div>
                 <Link className="card-link" to={`/events/${event.id}`}>
                   Læs mere
