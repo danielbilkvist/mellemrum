@@ -1,42 +1,11 @@
-import { useState } from "react";
 import { Link, useParams } from "react-router";
-import { create } from "../services/registrations";
 import useEvent from "../hooks/useEvent";
+import Registration from "../components/Registration";
 
 export default function EventPage() {
   const { eventId } = useParams();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
 
   const {event, loading, error } = useEvent(eventId);
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitMessage, setSubmitMessage] = useState("");
-
-
-
-  async function handleSubmit(eventSubmit) {
-    eventSubmit.preventDefault();
-    setIsSubmitting(true);
-    setSubmitMessage("");
-
-    try {
-      await create({
-        name: name.trim(),
-        email: email.trim(),
-        eventId: event.id,
-      });
-
-      setName("");
-      setEmail("");
-      setSubmitMessage("Tak! Din tilmelding er registreret.");
-    } catch (error) {
-      console.error(error);
-      setSubmitMessage("Tilmeldingen kunne ikke gemmes. Prøv igen.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
 
   if (loading) {
     return <p>Henter event...</p>;
@@ -103,38 +72,8 @@ export default function EventPage() {
           </div>
         </section>
 
-        <section className="signup-panel">
-          <div>
-            <p className="eyebrow dark">Tilmelding</p>
-            <h2>Reserver din plads</h2>
-            <p>
-              Udfyld formularen, så sender vi din tilmelding til arrangøren.
-            </p>
-          </div>
+        <Registration event={event} />
 
-          <form onSubmit={handleSubmit}>
-            <label>
-              Navn
-              <input
-                required
-                value={name}
-                onChange={(inputEvent) => setName(inputEvent.target.value)}
-              />
-            </label>
-            <span>E-mail</span>
-            <input
-              required
-              type="email"
-              value={email}
-              onChange={(inputEvent) => setEmail(inputEvent.target.value)}
-              placeholder="dig@example.com"
-            />
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Gemmer..." : "Tilmeld mig"}
-            </button>
-            {submitMessage && <span role="status">{submitMessage}</span>}
-          </form>
-        </section>
       </main>
     </>
   );
