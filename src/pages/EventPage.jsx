@@ -1,59 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router";
 import { create } from "../services/registrations";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const headers = {
-  apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json",
-};
+import useEvent from "../hooks/useEvent";
 
 export default function EventPage() {
   const { eventId } = useParams();
-  const [event, setEvent] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+  const {event, loading, error } = useEvent(eventId);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
 
-  useEffect(() => {
-    async function getEvent() {
-        try {
-          setLoading(true);
-          setError("");
-          
-      const query = "select=*,venue:venues(*)";
 
-      const response = await fetch(
-      `${SUPABASE_URL}/events?id=eq.${eventId}&${query}`,
-      { headers },
-      );
-
-      if (!response.ok) {
-        throw new Error("Siden kunne ikke hente event.");
-      }
-
-      const data = await response.json();
-
-      if (data.length === 0) {
-        throw new Error("Event ikke fundet.");
-      }
-
-      setEvent(data[0]);
-    } catch (error) {
-      console.error(error);
-      setError("Der opstod en fejl under hentning af event. Prøv igen senere.");
-    } finally {
-      setLoading(false);
-    }
-  }
-
-    getEvent();
-  }, [eventId]);
 
   async function handleSubmit(eventSubmit) {
     eventSubmit.preventDefault();
