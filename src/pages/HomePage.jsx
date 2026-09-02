@@ -2,21 +2,16 @@ import { useState } from "react";
 import useEvents from "../hooks/useEvents";
 import { Link } from "react-router";
 import EventGrid from "../components/EventGrid";
+import { filterEvents, getEventCategories } from "../utils/eventFilter";
+import EventFilters from "../components/EventFilters";
 
 export default function HomePage() {
   const { events, loading, error } = useEvents();
    const [search, setSearch] = useState("");
    const [category, setCategory] = useState("Alle");
-
-  const categories = ["Alle", ...new Set(events.map((event) => event.category))];
-
-  const filteredEvents = events.filter((event) => {
-    const searchText = `${event.title} ${event.summary} ${event.venue.name}`.toLowerCase();
-    const matchesSearch = searchText.includes(search.toLowerCase());
-    const matchesCategory = category === "Alle" || event.category === category;
-
-    return matchesSearch && matchesCategory;
-  });
+   
+   const categories = getEventCategories(events);
+   const filteredEvents = filterEvents(events, search, category);
 
   return (
     <>
@@ -41,28 +36,13 @@ export default function HomePage() {
           <p>Kuraterede oplevelser i byen. Fra små scener til store idéer.</p>
         </section>
 
-        <section className="filters">
-          <label>
-            Søg
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Søg efter titel eller sted"
-            />
-          </label>
-          <label>
-            Kategori
-            <select
-              value={category}
-              onChange={(event) => setCategory(event.target.value)}
-            >
-              {categories.map((item) => (
-                <option key={item}>{item}</option>
-              ))}
-            </select>
-          </label>
-        </section>
+        <EventFilters
+          search={search}
+          setSearch={setSearch}
+          category={category}
+          setCategory={setCategory}
+          categories={categories}
+        /> 
 
         {loading && <p>Henter events...</p>}
 
