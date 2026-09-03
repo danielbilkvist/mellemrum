@@ -1,5 +1,4 @@
-import { formatEventDate } from "../utils/formatDate";
-import { formatEventTime } from "../utils/formatDate";
+import { formatEventDate, formatEventTime } from "../utils/formatDate";
 
 export default function EventDetails({ event }) {
     return (

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
 import {formatEventDate} from "../utils/formatDate";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
