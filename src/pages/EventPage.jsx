@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router";
 import useEvent from "../hooks/useEvent";
 import EventDetails from "../components/EventDetails";
 import Registration from "../components/Registration";
-
+import styles from "./EventPage.module.css";
 
 export default function EventPage() {
   const { eventId } = useParams();
@@ -23,7 +23,7 @@ export default function EventPage() {
 
   return (
     <>
-      <main className="event-page">
+      <main className={styles.page}>
         <Link className="back-link" to="/">
           ← Alle events
         </Link>

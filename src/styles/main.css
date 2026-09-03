@@ -172,10 +172,6 @@ select:focus {
   font-size: clamp(1.25rem, 2vw, 1.7rem) !important;
 }
 
-.event-page {
-  max-width: 1280px;
-}
-
 .back-link {
   display: inline-block;
   font-size: 0.9rem;
