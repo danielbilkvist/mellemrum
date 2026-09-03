@@ -1,14 +1,15 @@
 import { formatEventDate, formatEventTime } from "../utils/formatDate";
+import style from "./EventDetails.module.css";
 
 export default function EventDetails({ event }) {
     return (
-<section className="event-detail">
+<section className={style.detail}>
   <img src={event.image} alt="" />
-  <div className="event-detail-content">
+  <div className={style.detailContent}>
     <p className="event-category">{event.category}</p>
     <h1>{event.title}</h1>
     <p className="lead">{event.summary}</p>
-    <div className="detail-list">
+    <div className={style.list}>
       <p>
         <strong>Dato</strong>
         {formatEventDate(event.date)} kl. {formatEventTime(event.date)}
