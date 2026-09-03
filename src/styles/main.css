@@ -553,14 +553,6 @@ select:focus {
 }
 
 @media (max-width: 900px) {
-  .event-detail {
-    grid-template-columns: 1fr;
-  }
-
-  .event-detail > img {
-    min-height: 380px;
-  }
-
   .about-intro,
   .about-city {
     grid-template-columns: 1fr;
