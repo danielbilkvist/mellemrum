@@ -38,11 +38,11 @@
 }
 
 @media (max-width: 900px) {
-  .event-detail {
+  .detail {
     grid-template-columns: 1fr;
   }
 
-  .event-detail > img {
+  .detail > img {
     min-height: 380px;
   }
 }
