@@ -1,6 +1,5 @@
 import { useState } from "react";
 import useEvents from "../hooks/useEvents";
-import { Link } from "react-router";
 import EventGrid from "../components/EventGrid";
 import { filterEvents, getEventCategories } from "../utils/eventFilter";
 import EventFilters from "../components/EventFilters";

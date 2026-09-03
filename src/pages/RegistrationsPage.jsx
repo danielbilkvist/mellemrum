@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import {formatEventDate} from "../utils/formatDate";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -71,7 +72,7 @@ export default function RegistrationsPage() {
                 <small>{registration.email}</small>
               </div>
               <span>{registration.event.title}</span>
-              <span>{new Date(registration.event.date).toLocaleDateString("da-DK")}</span>
+              <span>{formatEventDate(registration.event.date)}</span>
               <span className="status">{registration.status}</span>
             </div>
           ))}

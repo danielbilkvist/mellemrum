@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const headers = {
-  apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json",
-};
+import { getAll } from "../services/events";
 
 export default function useEvents() {
   const [events, setEvents] = useState([]);
@@ -12,29 +7,25 @@ export default function useEvents() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function getEvents() {
+    async function loadEvents() {
       try {
         setLoading(true);
         setError("");
-        
-      const query = "select=*,venue:venues(*)";
 
-      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc&${query}`, { headers });
-      if (!response.ok) {
-        throw new Error("Siden kunne ikke hente events.");
-      }
-      const data = await response.json();
-      setEvents(data);
+        const data = await getAll();
+        setEvents(data);
       } catch (error) {
         console.error(error);
 
-      setError("Der opstod en fejl under hentning af events. Prøv igen senere.");
+        setError(
+          "Der opstod en fejl under hentning af events. Prøv igen senere.",
+        );
       } finally {
         setLoading(false);
       }
     }
 
-    getEvents();
+    loadEvents();
   }, []);
   return { events, loading, error };
 }
