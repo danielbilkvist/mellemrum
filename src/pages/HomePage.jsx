@@ -3,6 +3,7 @@ import useEvents from "../hooks/useEvents";
 import EventGrid from "../components/EventGrid";
 import { filterEvents, getEventCategories } from "../utils/eventFilter";
 import EventFilters from "../components/EventFilters";
+import styles from "./HomePage.module.css";
 
 export default function HomePage() {
   const { events, loading, error } = useEvents();
@@ -14,14 +15,14 @@ export default function HomePage() {
 
   return (
     <>
-      <header className="hero">
+      <header className={styles.hero}>
         <p className="eyebrow">Kultur i Aarhus</p>
         <h1>Find plads til noget nyt.</h1>
-        <p className="hero-copy">
+        <p className={styles.copy}>
           Koncerter, talks og workshops samlet ét sted. Find dit næste event, og
           tilmeld dig på få minutter.
         </p>
-        <a className="hero-link" href="#events">
+        <a className={styles.link} href="#events">
           Se kommende events ↓
         </a>
       </header>
