@@ -240,23 +240,6 @@ select:focus {
   text-align: center;
 }
 
-.not-found-title {
-  font-size: 5rem;
-}
-
-.not-found {
-  text-align: center;
-}
-
-.not-found-link {
-  background: var(--green);
-  color: white;
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-}
-
 @media (max-width: 620px) {
   .section-heading {
     align-items: flex-start;
