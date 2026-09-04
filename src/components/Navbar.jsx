@@ -1,17 +1,17 @@
 import { NavLink } from "react-router";
-import styles from "./Navbar.module.css";
+import style from "./Navbar.module.css";
 
 function getNavLinkClass({ isActive }) {
-  return isActive ? `${styles.link} ${styles.active}` : styles.link;
+  return isActive ? `${style.link} ${style.active}` : style.link;
 }
 
 export default function Navbar() {
   return (
-    <nav className={styles.nav}>
-      <NavLink className={styles.brand} to="/">
+    <nav className={style.nav}>
+      <NavLink className={style.brand} to="/">
         mellemrum<span>.</span>
       </NavLink>
-      <div className={styles.links}>
+      <div className={style.links}>
         <NavLink to="/" className={getNavLinkClass}>
           Events
         </NavLink>

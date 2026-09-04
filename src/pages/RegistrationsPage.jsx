@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import {formatEventDate} from "../utils/formatDate";
+import styles from "./RegistrationsPage.module.css";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
@@ -57,21 +58,21 @@ export default function RegistrationsPage() {
         {error && <p>{error}</p>}
 
         {!loading && !error && (
-        <div className="registration-list">
-          <div className="registration-row registration-labels">
+        <div className={styles.list}>
+          <div className={styles.labels + " " + styles.row}>
             <span>Navn</span>
             <span>Event</span>
             <span>Dato</span>
             <span>Status</span>
           </div>
           {registrations.map((registration) => (
-            <div className="registration-row" key={registration.id}>
+            <div className={styles.row} key={registration.id}>
               <div>
                 <strong>{registration.name}</strong>
                 <small>{registration.email}</small>
               </div>
               <span>{registration.event.title}</span>
-              <span>{new Date(registration.event.date).toLocaleDateString("da-DK")}</span>
+              <span>{formatEventDate(registration.event.date)}</span>
               <span className="status">{registration.status}</span>
             </div>
           ))}

@@ -1,77 +1,28 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const headers = {
-  apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json"
-};
+import { useState } from "react";
+import useEvents from "../hooks/useEvents";
+import EventGrid from "../components/EventGrid";
+import { filterEvents, getEventCategories } from "../utils/eventFilter";
+import EventFilters from "../components/EventFilters";
+import styles from "./HomePage.module.css";
 
 export default function HomePage() {
-  const [events, setEvents] = useState([]);
-  const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("Alle");
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    async function getEvents() {
-      try {
-        setLoading(true);
-        setError("");
-        
-      const query = "select=*,venue:venues(*)";
-
-      const response = await fetch(`${SUPABASE_URL}/events?order=date.asc&${query}`, { headers });
-      if (!response.ok) {
-        throw new Error("Siden kunne ikke hente events.");
-      }
-      const data = await response.json();
-      setEvents(data);
-      } catch (error) {
-        console.error(error);
-
-      setError("Der opstod en fejl under hentning af events. Prøv igen senere.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    getEvents();
-  }, []);
-
-  const categories = ["Alle", ...new Set(events.map((event) => event.category))];
-
-  const filteredEvents = events.filter((event) => {
-    const searchText = `${event.title} ${event.summary} ${event.venue.name}`.toLowerCase();
-    const matchesSearch = searchText.includes(search.toLowerCase());
-    const matchesCategory = category === "Alle" || event.category === category;
-
-    return matchesSearch && matchesCategory;
-  });
-
-  function formatEventDate(eventDate) {
-    const date = new Date(eventDate);
-    const formattedDate = date.toLocaleDateString("da-DK", {
-      weekday: "long",
-      day: "numeric",
-      month: "long"
-    });
-
-    return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
-  }
+  const { events, loading, error } = useEvents();
+   const [search, setSearch] = useState("");
+   const [category, setCategory] = useState("Alle");
+   
+   const categories = getEventCategories(events);
+   const filteredEvents = filterEvents(events, search, category);
 
   return (
     <>
-      <header className="hero">
+      <header className={styles.hero}>
         <p className="eyebrow">Kultur i Aarhus</p>
         <h1>Find plads til noget nyt.</h1>
-        <p className="hero-copy">
+        <p className={styles.copy}>
           Koncerter, talks og workshops samlet ét sted. Find dit næste event, og
           tilmeld dig på få minutter.
         </p>
-        <a className="hero-link" href="#events">
+        <a className={styles.link} href="#events">
           Se kommende events ↓
         </a>
       </header>
@@ -85,53 +36,19 @@ export default function HomePage() {
           <p>Kuraterede oplevelser i byen. Fra små scener til store idéer.</p>
         </section>
 
-        <section className="filters">
-          <label>
-            Søg
-            <input
-              type="search"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Søg efter titel eller sted"
-            />
-          </label>
-          <label>
-            Kategori
-            <select
-              value={category}
-              onChange={(event) => setCategory(event.target.value)}
-            >
-              {categories.map((item) => (
-                <option key={item}>{item}</option>
-              ))}
-            </select>
-          </label>
-        </section>
+        <EventFilters
+          search={search}
+          setSearch={setSearch}
+          category={category}
+          setCategory={setCategory}
+          categories={categories}
+        /> 
 
         {loading && <p>Henter events...</p>}
 
         {error && <p>{error}</p>}
-
         {!loading && !error && (
-        <section className="event-grid">
-          {filteredEvents.map((event) => (
-            <article className="event-card" key={event.id}>
-              <img src={event.image} alt="" />
-              <div className="event-card-content">
-                <p className="event-category">{event.category}</p>
-                <h3>{event.title}</h3>
-                <p>{event.summary}</p>
-                <div className="event-meta">
-                  <span>{formatEventDate(event.date)}</span>
-                  <span>{event.venue.name}</span>
-                </div>
-                <Link className="card-link" to={`/events/${event.id}`}>
-                  Læs mere
-                </Link>
-              </div>
-            </article>
-          ))}
-        </section>
+       <EventGrid events={filteredEvents} />
         )}
       </main>
     </>

@@ -1,7 +1,9 @@
 import { fetchFromSupabase, sendToSupabase } from "../lib/supabase";
 
-export async function getAll() {
-  return fetchFromSupabase("/registrations?order=createdAt.desc");
+export function getAll() {
+  return fetchFromSupabase(
+    "/registrations?order=createdAt.desc&select=*,event:events(*)",
+  );
 }
 
 export async function getById(id) {
