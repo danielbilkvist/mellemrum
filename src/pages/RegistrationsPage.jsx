@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import {formatEventDate} from "../utils/formatDate";
+import { formatEventDate } from "../utils/formatDate";
 import styles from "./RegistrationsPage.module.css";
+import RegistrationSkeleton from "../components/RegistrationSkeleton";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const headers = {
   apikey: import.meta.env.VITE_SUPABASE_APIKEY,
-  "Content-Type": "application/json"
+  "Content-Type": "application/json",
 };
 
 export default function RegistrationsPage() {
@@ -21,22 +22,26 @@ export default function RegistrationsPage() {
         setLoading(true);
         setError("");
 
-      const query = "select=*,event:events(*)";
+        const query = "select=*,event:events(*)";
 
-      const response = await fetch(`${SUPABASE_URL}/registrations?order=createdAt.desc&${query}`, { headers });
+        const response = await fetch(
+          `${SUPABASE_URL}/registrations?order=createdAt.desc&${query}`,
+          { headers },
+        );
 
-      if (!response.ok) {
-        throw new Error("Siden kunne ikke hente tilmeldinger.");
-      }
+        if (!response.ok) {
+          throw new Error("Siden kunne ikke hente tilmeldinger.");
+        }
 
-      const data = await response.json();
-      setRegistrations(data);
-      setRegistrationCount(data.length);
-    } catch (error) {
-      console.error(error);
-      setError("Der opstod en fejl under hentning af tilmeldinger. Prøv igen senere.");
-    }
-      finally {
+        const data = await response.json();
+        setRegistrations(data);
+        setRegistrationCount(data.length);
+      } catch (error) {
+        console.error(error);
+        setError(
+          "Der opstod en fejl under hentning af tilmeldinger. Prøv igen senere.",
+        );
+      } finally {
         setLoading(false);
       }
     }
@@ -52,31 +57,30 @@ export default function RegistrationsPage() {
         <p>{registrationCount} tilmeldinger i alt</p>
       </header>
       <main>
-
-        {loading && <p>Henter tilmeldinger...</p>}
+        {loading && <RegistrationSkeleton />}
 
         {error && <p>{error}</p>}
 
         {!loading && !error && (
-        <div className={styles.list}>
-          <div className={styles.labels + " " + styles.row}>
-            <span>Navn</span>
-            <span>Event</span>
-            <span>Dato</span>
-            <span>Status</span>
-          </div>
-          {registrations.map((registration) => (
-            <div className={styles.row} key={registration.id}>
-              <div>
-                <strong>{registration.name}</strong>
-                <small>{registration.email}</small>
-              </div>
-              <span>{registration.event.title}</span>
-              <span>{formatEventDate(registration.event.date)}</span>
-              <span className="status">{registration.status}</span>
+          <div className={styles.list}>
+            <div className={styles.labels + " " + styles.row}>
+              <span>Navn</span>
+              <span>Event</span>
+              <span>Dato</span>
+              <span>Status</span>
             </div>
-          ))}
-        </div>
+            {registrations.map((registration) => (
+              <div className={styles.row} key={registration.id}>
+                <div>
+                  <strong>{registration.name}</strong>
+                  <small>{registration.email}</small>
+                </div>
+                <span>{registration.event.title}</span>
+                <span>{formatEventDate(registration.event.date)}</span>
+                <span className="status">{registration.status}</span>
+              </div>
+            ))}
+          </div>
         )}
       </main>
     </>

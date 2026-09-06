@@ -1,0 +1,54 @@
+.page {
+  background: white;
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  overflow: hidden;
+}
+
+.image {
+  border-radius: 0;
+  min-height: 600px;
+}
+
+.content {
+  align-content: start;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+
+.category {
+  height: 0.8rem;
+  width: 30%;
+}
+
+.title {
+  height: 4rem;
+  width: 80%;
+}
+
+.summary {
+  height: 1.5rem;
+  width: 80%;
+}
+
+.line {
+  height: 1rem;
+  width: 100%;
+}
+
+.lineShort {
+  height: 1rem;
+  width: 60%;
+}
+
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+
+  .image {
+    min-height: 380px;
+  }
+}
