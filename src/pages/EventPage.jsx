@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router";
+import { Link, Navigate, useParams } from "react-router";
 import useEvent from "../hooks/useEvent";
 import EventDetails from "../components/EventDetails";
 import Registration from "../components/Registration";
@@ -15,7 +15,7 @@ export default function EventPage() {
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <Navigate to="/not-found" />;
   }
 
   if (!event) {
