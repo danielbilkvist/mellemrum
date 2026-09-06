@@ -16,7 +16,7 @@ export default function HomePage() {
 
   return (
     <>
-      <header className={styles.hero}>
+      <header className={styles.hero} loading="eager" fetchpriority="high">
         <p className="eyebrow">Kultur i Aarhus</p>
         <h1>Find plads til noget nyt.</h1>
         <p className={styles.copy}>
