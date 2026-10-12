@@ -5,7 +5,7 @@ import style from "./EventCard.module.css";
 export default function EventCard({ event }) {
     return (
         <article className={style.card} key={event.id}>
-              <img src={event.image} alt="" />
+              <img src={event.image} alt={event.title} loading="lazy" />
               <div className={style.cardContent}>
                 <p className="event-category">{event.category}</p>
                 <h3>{event.title}</h3>

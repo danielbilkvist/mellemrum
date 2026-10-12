@@ -4,7 +4,7 @@ import style from "./EventDetails.module.css";
 export default function EventDetails({ event }) {
     return (
 <section className={style.detail}>
-  <img src={event.image} alt="" />
+  <img src={event.image} alt={event.title} loading="lazy" />
   <div className={style.detailContent}>
     <p className="event-category">{event.category}</p>
     <h1>{event.title}</h1>

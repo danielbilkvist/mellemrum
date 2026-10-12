@@ -1,20 +1,21 @@
-import { Link, useParams } from "react-router";
+import { Link, Navigate, useParams } from "react-router";
 import useEvent from "../hooks/useEvent";
 import EventDetails from "../components/EventDetails";
 import Registration from "../components/Registration";
 import styles from "./EventPage.module.css";
+import EventSkeleton from "../components/EventSkeleton";
 
 export default function EventPage() {
   const { eventId } = useParams();
 
-  const {event, loading, error } = useEvent(eventId);
+  const { event, loading, error } = useEvent(eventId);
 
   if (loading) {
-    return <p>Henter event...</p>;
+    return <EventSkeleton />;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <Navigate to="/not-found" />;
   }
 
   if (!event) {
@@ -31,7 +32,6 @@ export default function EventPage() {
         <EventDetails event={event} />
 
         <Registration event={event} />
-
       </main>
     </>
   );

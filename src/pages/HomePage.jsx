@@ -4,18 +4,19 @@ import EventGrid from "../components/EventGrid";
 import { filterEvents, getEventCategories } from "../utils/eventFilter";
 import EventFilters from "../components/EventFilters";
 import styles from "./HomePage.module.css";
+import HomeSkeleton from "../components/HomeSkeleton";
 
 export default function HomePage() {
   const { events, loading, error } = useEvents();
-   const [search, setSearch] = useState("");
-   const [category, setCategory] = useState("Alle");
-   
-   const categories = getEventCategories(events);
-   const filteredEvents = filterEvents(events, search, category);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("Alle");
+
+  const categories = getEventCategories(events);
+  const filteredEvents = filterEvents(events, search, category);
 
   return (
     <>
-      <header className={styles.hero}>
+      <header className={styles.hero} loading="eager" fetchpriority="high">
         <p className="eyebrow">Kultur i Aarhus</p>
         <h1>Find plads til noget nyt.</h1>
         <p className={styles.copy}>
@@ -42,14 +43,12 @@ export default function HomePage() {
           category={category}
           setCategory={setCategory}
           categories={categories}
-        /> 
+        />
 
-        {loading && <p>Henter events...</p>}
+        {loading && <HomeSkeleton />}
 
         {error && <p>{error}</p>}
-        {!loading && !error && (
-       <EventGrid events={filteredEvents} />
-        )}
+        {!loading && !error && <EventGrid events={filteredEvents} />}
       </main>
     </>
   );
