@@ -15,6 +15,14 @@
   transform: translateY(-4px);
 }
 
+.cardLink {
+  color: inherit;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  text-decoration: none;
+}
+
 .card img {
   aspect-ratio: 4 / 3;
   display: block;
@@ -54,7 +62,7 @@
   transition: background 160ms ease, color 160ms ease;
 }
 
-.link:hover {
+.card:hover .link {
   background: var(--lime);
   color: var(--green);
 }

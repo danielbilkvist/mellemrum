@@ -4,7 +4,8 @@ import style from "./EventCard.module.css";
 
 export default function EventCard({ event }) {
     return (
-        <article className={style.card} key={event.id}>
+        <article className={style.card}>
+          <Link className={style.cardLink} to={`/events/${event.id}`}>
               <img src={event.image} alt={event.title} loading="lazy" />
               <div className={style.cardContent}>
                 <p className="event-category">{event.category}</p>
@@ -14,10 +15,11 @@ export default function EventCard({ event }) {
                   <span>{formatEventDate(event.date)}</span>
                   <span>{event.venue.name}</span>
                 </div>
-                <Link className={style.link} to={`/events/${event.id}`}>
+                <span className={style.link}>
                   Læs mere
-                </Link>
+                </span>
               </div>
-            </article>
+          </Link>
+        </article>
     );
 }
