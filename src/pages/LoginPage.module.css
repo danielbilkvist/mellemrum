@@ -1,0 +1,64 @@
+.page {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-height: 65vh;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  max-width: 30rem;
+  padding: clamp(2rem, 5vw, 4rem);
+  width: min(100%, 30rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.card h1 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  line-height: 0.95;
+  margin: 0;
+}
+
+.intro {
+  color: #53605b;
+  line-height: 1.5;
+  margin: 1.25rem 0 2rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.form label {
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 800;
+  margin-top: 0.6rem;
+}
+
+.form input {
+  width: 100%;
+}
+
+.form button {
+  background: var(--green);
+  border: 0;
+  border-radius: 999px;
+  color: white;
+  cursor: pointer;
+  font-weight: 800;
+  margin-top: 1.2rem;
+  padding: 0.85rem 1.2rem;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.form button:hover {
+  background: var(--lime);
+  color: var(--green);
+  transform: translateY(-2px);
+}

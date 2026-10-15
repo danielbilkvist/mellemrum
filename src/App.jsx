@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import EventPage from "./pages/EventPage";
 import RegistrationsPage from "./pages/RegistrationsPage";
+import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/events/:eventId" element={<EventPage />} />
           <Route path="/om" element={<AboutPage />} />
           <Route path="/tilmeldinger" element={<RegistrationsPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       <Footer />
